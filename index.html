@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Hana Nazirah</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #000000;
+            color: #fbcce7;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        .active {
+            display: flex;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 90%;
+            border: 1px solid #fbcce7;
+            box-shadow: 0 0 15px rgba(251, 204, 231, 0.2);
+            z-index: 3;
+        }
+        .btn-utama {
+            margin-top: 25px;
+            padding: 12px 24px;
+            background-color: transparent;
+            color: #fbcce7;
+            border: 2px solid #fbcce7;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+            box-shadow: 0 0 10px rgba(251, 204, 231, 0.3);
+            transition: 0.3s;
+        }
+        .btn-utama:active {
+            background-color: #fbcce7;
+            color: #000;
+        }
+        .secure-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.7);
+            z-index: 4;
+        }
+        .bottom-left-text {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            font-size: 0.8rem;
+            color: #fbcce7;
+            z-index: 4;
+        }
+        .bottom-right-text {
+            position: absolute;
+            bottom: 25px;
+            right: 20px;
+            font-size: 0.8rem;
+            color: #fbcce7;
+            z-index: 4;
+        }
+        .sorry-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .big-sayang {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffb7c5;
+            text-shadow: 0 0 8px #ffb7c5;
+            line-height: 1.4;
+        }
+        .navigation-wrapper {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            z-index: 4;
+        }
+        .arrow-down {
+            font-size: 1.5rem;
+            color: #ff0033;
+            animation: lompat 0.6s infinite alternate;
+            margin-bottom: 2px;
+        }
+        .rose-btn {
+            font-size: 2.2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        @keyframes lompat {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+        }
+        .last-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .last-sub {
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-shadow: 0 0 5px #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- PAGE 1: Welcome Screen -->
+    <div id="page1" class="page active">
+        <div class="container">
+            <h1>for hana nazirah</h1>
+            <button class="btn-utama" onclick="pergiKePage2()">kalau sayang,tekan</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2: Surat Maaf Screen -->
+    <div id="page2" class="page">
+        <div class="secure-box">data secure</div>
+        
+        <div class="container">
+            <p class="sorry-text">sowwyy hanaa nazirah kalau saye ade wat salah☹️saye mintak maapp okess,jangn la iplai singkattt"..saye mintakk maapp oteyy👉🏻👈🏻</p>
+            <h2 class="big-sayang">SAYANGGGG BUDAK KICIKKK SAYENI,LOPYU</h2>
+        </div>
+
+        <!-- Anak panah bergerak ke bawah & bunga rose merah -->
+        <div class="navigation-wrapper" onclick="pergiKePage3()">
+            <div class="arrow-down">↓</div>
+            <button class="rose-btn">🌹</button>
+        </div>
+
+        <div class="bottom-left-text">yayaangg hana always</div>
+        <div class="bottom-right-text">:yayaamster</div>
+    </div>
+
+    <!-- PAGE 3: Last Screen -->
+    <div id="page3" class="page">
+        <div class="container">
+            <h1 class="last-title">sekiann darii sayee</h1>
+            <p class="last-sub">YAYAAM MINTAKK MAAPPP HANAA🤍</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let currentPage = 1;
+
+        // Grid Pixel Art Love (Page 1 - Merah)
+        const heartPattern = [
+            [0,0,1,1,0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,1,1,1,1,0],
+            [1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1],
+            [0,1,1,1,1,1,1,1,1,1,0],
+            [0,0,1,1,1,1,1,1,1,0,0],
+            [0,0,0,1,1,1,1,1,0,0,0],
+            [0,0,0,0,1,1,1,0,0,0,0],
+            [0,0,0,0,0,1,0,0,0,0,0]
+        ];
+
+        // Grid Pixel Art Bunga Lily Besar (Page 2 Tengah)
+        const bigLilyPattern = [
+            [0,0,0,0,0,1,0,1,0,0,0,0,0],
+            [0,0,0,0,1,1,1,1,1,0,0,0,0],
+            [0,0,0,1,1,1,1,1,1,1,0,0,0],
+            [0,0,1,1,1,1,1,1,1,1,1,0,0],
+            [0,1,1,1,0,1,1,1,0,1,1,1,0],
+            [1,1,1,0,0,1,1,1,0,0,1,1,1],
+            [1,1,0,0,0,1,1,1,0,0,0,1,1],
+            [1,1,1,0,0,1,1,1,0,0,1,1,1],
+            [0,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,0,1,1,1,1,1,1,1,1,1,0,0],
+            [0,0,0,0,1,1,1,1,1,0,0,0,0],
+            [0,0,0,0,0,1,1,1,0,0,0,0,0],
+            [0,0,0,0,0,0,1,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,0,0,0,0,0,0]
+        ];
+
+        // Grid Pixel Art Bunga Lily Kecil (Page 2 Tepi)
+        const smallLilyPattern = [
+            [0,0,1,0,1,0,0],
+            [0,1,1,1,1,1,0],
+            [1,1,0,1,0,1,1],
+            [0,1,1,1,1,1,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,1,0,0,0]
+        ];
+
+        // Setup Matrix Data
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+=*-%$#@🤍";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Page 1 matrix warna merah pekat, Page 2 & 3 warna pastel pink
+            ctx.fillStyle = currentPage === 1 ? '#ff0033' : '#ffb7c5';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+
+        // Fungsi lukis pixel art blok kotak kecil
+        function drawPixelArt(pattern, startX, startY, size, color) {
+            ctx.fillStyle = color;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = color;
+
+            for (let r = 0; r < pattern.length; r++) {
+                for (let c = 0; c < pattern[r].length; c++) {
+                    if (pattern[r][c] === 1) {
+                        ctx.fillRect(startX + (c * size), startY + (r * size), size - 1, size - 1);
+                    }
+                }
+            }
+            ctx.shadowBlur = 0;
+        }
+
+        function mainLoop() {
+            drawMatrix();
+
+            if (currentPage === 1) {
+                // Skrin tengah bentuk Love merah di Page 1
+                const pSize = window.innerWidth < 500 ? 9 : 13;
+                const x = (canvas.width / 2) - ((11 * pSize) / 2);
+                const y = canvas.height * 0.22;
+                drawPixelArt(heartPattern, x, y, pSize, '#ff0033');
+            } 
+            else if (currentPage === 2) {
+                // Lily Besar kat Tengah Skrin (Soft Pink Pastel)
+                const bigSize = window.innerWidth < 500 ? 8 : 14;
+                const bX = (canvas.width / 2) - ((13 * bigSize) / 2);
+                const bY = canvas.height * 0.15;
+                drawPixelArt(bigLilyPattern, bX, bY, bigSize, '#fbcce7');
+
+                // Lily Kecil dekat Tepi Kiri & Kanan Skrin
+                const smSize = window.innerWidth < 500 ? 5 : 8;
+                drawPixelArt(smallLilyPattern, 25, canvas.height * 0.45, smSize, '#fbcce7');
+                drawPixelArt(smallLilyPattern, canvas.width - 70, canvas.height * 0.45, smSize, '#fbcce7');
+            }
+
+            requestAnimationFrame(mainLoop);
+        }
+
+        function pergiKePage2() {
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
+            currentPage = 2;
+        }
+
+        function pergiKePage3() {
+            document.getElementById('page2').classList.remove('active');
+            document.getElementById('page3').classList.add('active');
+            currentPage = 3;
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        mainLoop();
+    </script>
+</body>
+</html>
