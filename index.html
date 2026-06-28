@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Hana Nazirah ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #000;
+            color: #ff0000;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Background Hujan Matrix */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.25;
+        }
+
+        /* Struktur Halaman/Page */
+        .page {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .active {
+            display: flex;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+
+        /* PAGE 1: Welcome */
+        .welcome-text {
+            font-size: 2.3rem;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-love {
+            background: transparent;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-love:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 25px #ff0000;
+        }
+
+        /* PAGE 2: Apology Components */
+        .data-secure {
+            position: absolute;
+            top: -50px;
+            right: 10px;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 5px 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .apology-text {
+            font-size: 1.15rem;
+            color: #fff;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            word-wrap: break-word;
+        }
+
+        .big-sayang {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 12px #ff0000;
+            margin-bottom: 3rem;
+            line-height: 1.4;
+        }
+
+        /* Penjuru Bawah (Fixed) */
+        .footer-left {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #ff3333;
+            font-size: 0.85rem;
+            z-index: 3;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .footer-right {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #ff3333;
+            font-size: 0.85rem;
+            z-index: 3;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        /* Animasi Anak Panah & Rose */
+        .nav-rose {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            margin-top: 10px;
+            background: none;
+            border: none;
+        }
+
+        .arrow-down {
+            font-size: 1.8rem;
+            color: #ff0000;
+            animation: bounce 0.8s infinite alternate;
+            margin-bottom: -5px;
+        }
+
+        .rose-icon {
+            font-size: 2.8rem;
+            transition: transform 0.3s;
+        }
+
+        .nav-rose:hover .rose-icon {
+            transform: scale(1.2);
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(10px); }
+        }
+
+        /* PAGE 3: Final */
+        .sekian {
+            font-size: 1.6rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .final-maaf {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 15px #ff0000;
+            line-height: 1.4;
+        }
+
+        /* Simbol Bentuk Overlay (Heart / Lily) */
+        .shape-bg {
+            position: absolute;
+            font-size: 16rem;
+            color: #ff0000;
+            opacity: 0.12;
+            z-index: 1;
+            pointer-events: none;
+            text-shadow: 0 0 25px #ff0000;
+        }
+        
+        .lily-kecil-l {
+            position: fixed;
+            left: 6%;
+            top: 45%;
+            font-size: 4rem;
+            color: #ff0000;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+        
+        .lily-kecil-r {
+            position: fixed;
+            right: 6%;
+            top: 45%;
+            font-size: 4rem;
+            color: #ff0000;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Hujan Kod -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- PAGE 1: Welcome Screen -->
+    <div id="p1" class="page active">
+        <div class="shape-bg">❤️</div> <!-- Matrix Love di tengah -->
+        <h1 class="welcome-text">for hana nazirah</h1>
+        <button class="btn-love" onclick="nextPage('p1', 'p2')">kalau sayang,tekan</button>
+    </div>
+
+    <!-- PAGE 2: Mesej Maaf & Sayang -->
+    <div id="p2" class="page">
+        <div class="shape-bg" style="font-size: 18rem;">⚜️</div> <!-- Simbol Bunga Lily Besar -->
+        <div class="lily-kecil-l">⚜️</div> <!-- Lily kecil tepi kiri -->
+        <div class="lily-kecil-r">⚜️</div> <!-- Lily kecil tepi kanan -->
+        
+        <div class="data-secure">data secure</div>
+        
+        <p class="apology-text">
+            sowwyy hanaa nazirah kalau saye ade wat salah☹️saye mintak maapp okess,jangn la iplai singkattt"..saye mintakk maapp oteyy👉🏻👈🏻
+        </p>
+        
+        <h2 class="big-sayang">SAYANGGGG BUDAK KICIKKK SAYENI,LOPYU</h2>
+        
+        <!-- Butang Rose & Anak Panah -->
+        <button class="nav-rose" onclick="nextPage('p2', 'p3')">
+            <div class="arrow-down">↓</div>
+            <div class="rose-icon">🌹</div>
+        </button>
+    </div>
+
+    <!-- PAGE 3: Ending -->
+    <div id="p3" class="page">
+        <h2 class="sekian">sekiann darii sayee</h2>
+        <h1 class="final-maaf">YAYAAM MINTAKK MAAPPP HANAA🤍</h1>
+    </div>
+
+    <!-- Teks Penjuru Bawah (Hanya keluar di Page 2 & 3) -->
+    <div id="fLeft" class="footer-left" style="display:none;">yayaangg hana always</div>
+    <div id="fRight" class="footer-right" style="display:none;">:yayaamster</div>
+
+    <script>
+        // SCRIPT ANIMASI RAIN MATRIX
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrixChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ❤️🌹⚜️";
+        const charArr = matrixChars.split("");
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#ff0000'; // Set warna hantaran tulisan jadi merah
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArr[Math.floor(Math.random() * charArr.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        setInterval(drawMatrix, 33);
+
+        // FUNGSI TUKAR PAGE
+        function nextPage(currentId, nextId) {
+            document.getElementById(currentId).classList.remove('active');
+            document.getElementById(nextId).classList.add('active');
+            
+            // Tampilkan teks penjuru jika masuk page 2 atau 3
+            if(nextId === 'p2' || nextId === 'p3') {
+                document.getElementById('fLeft').style.display = 'block';
+                document.getElementById('fRight').style.display = 'block';
+            } else {
+                document.getElementById('fLeft').style.display = 'none';
+                document.getElementById('fRight').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
